@@ -11,12 +11,3 @@ public class HomeController {
         return String.format("Welcome %s", name);
     }
 }
-
-/*
-kitap
-yazarlar
-        attributes
-Isbn
-                publish year
-                        author naames
-*/
