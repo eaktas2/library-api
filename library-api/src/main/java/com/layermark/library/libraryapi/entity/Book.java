@@ -1,8 +1,11 @@
 package com.layermark.library.libraryapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.layermark.library.libraryapi.service.AuthorService;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -25,7 +28,12 @@ public class Book {
     private String name;
 
     @Column
-    private String authors;
+    private String author_name;
+
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="author_id")
+    private Author author;
 
     @Column
     private int publishYear;
@@ -36,12 +44,12 @@ public class Book {
     @Column
     private String publisher;
 
-    public Book(String name, String authors,
+    public Book(String name, String author,
                 int isbn, int publishYear, String genre,
-                String publisher){
+                String publisher, int author_id){
         this.name = name;
         this.isbn = isbn;
-        this.authors = authors;
+        this.author_name = author;
         this.publisher = publisher;
         this.publishYear = publishYear;
         this.genre = genre;

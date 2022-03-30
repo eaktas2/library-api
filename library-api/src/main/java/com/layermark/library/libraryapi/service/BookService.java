@@ -15,17 +15,29 @@ public class BookService {
     BookRepository bookRepository;
 
     public List<Book> getAllBooks(){
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new ArrayList<>();
         bookRepository.findAll().forEach(book ->books.add(book));
         return books;
     }
 
+
+
     public Book getBookById(int bookId){
-        return bookRepository.findById(bookId).get();
+        if (bookRepository.existsById(bookId))
+            return bookRepository.findById(bookId).get();
+        else
+            return null;
+
     }
 
-    public void deleteBook(int id){
-        bookRepository.deleteById(id);
+    public String deleteBook(int id){
+        if (bookRepository.existsById(id)) {
+            bookRepository.deleteById(id);
+            return "Deletion Successful!";
+        }
+        else
+            return "Deletion Failed! No book exists for the given id";
+
     }
 
     public void saveBook(Book book){
