@@ -20,22 +20,18 @@ public class AuthorService {
     BookRepository bookRepository;
 
     public List<Author> getAllAuthors(){
-        List<Author> authors = new ArrayList<>();
-        authorRepository.findAll().forEach(author ->authors.add(author));
-        return authors;
+        return authorRepository.findAll();
     }
 
     public Author getAuthorById(int authorId){
-        if (authorRepository.existsById(authorId))
-            return authorRepository.findById(authorId).get();
-        else
-            return null;
+        return authorRepository.findById(authorId).orElse(null);
     }
 
     public List<Book> getAllBooksByAuthor(int authorId){
-        if (authorRepository.existsById(authorId))
-            return this.getAuthorById(authorId).getBooks();
-        else
+        Author author = getAuthorById(authorId);
+        if (author != null){
+            return author.getBooks();
+        } else
             return null;
     }
 

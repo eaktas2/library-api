@@ -15,19 +15,11 @@ public class BookService {
     BookRepository bookRepository;
 
     public List<Book> getAllBooks(){
-        List<Book> books = new ArrayList<>();
-        bookRepository.findAll().forEach(book ->books.add(book));
-        return books;
+        return bookRepository.findAll();
     }
 
-
-
     public Book getBookById(int bookId){
-        if (bookRepository.existsById(bookId))
-            return bookRepository.findById(bookId).get();
-        else
-            return null;
-
+        return bookRepository.findById(bookId).orElse(null);
     }
 
     public String deleteBook(int id){
